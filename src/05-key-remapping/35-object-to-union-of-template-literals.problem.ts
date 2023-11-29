@@ -3,10 +3,19 @@ import { Equal, Expect } from "../helpers/type-utils";
 interface FruitMap {
   apple: "red";
   banana: "yellow";
+  pina: {
+    foo: "bar",
+    bar: "baz",
+  },
   orange: "orange";
+  blueberry: {
+    ignore: true,
+  }
 }
 
-type TransformedFruit = unknown;
+type TransformedFruit = {
+  [K in keyof FruitMap]: `${K}:${FruitMap[K]}`
+}[keyof FruitMap];
 
 type tests = [
   Expect<
